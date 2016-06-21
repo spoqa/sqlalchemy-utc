@@ -90,7 +90,7 @@ class FixedOffset(datetime.tzinfo):
     FixedOffset(datetime.timedelta(hours=9), 'KST'),
 ])
 def test_utc_datetime(fx_session, tzinfo):
-    aware_time = datetime.datetime.now(tzinfo)
+    aware_time = datetime.datetime.now(tzinfo).replace(microsecond=0)
     e = UtcDateTimeTable(time=aware_time)
     fx_session.add(e)
     fx_session.flush()
