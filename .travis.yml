@@ -14,10 +14,10 @@ env:
   - MYSQL_URL="mysql+mysqlconnector://root@localhost/utc_test"
   - TEST_DATABASE_URLS="$PG_URL $MYSQL_URL"
   matrix:
-  - SQLALCHEMY_VER=">=0.8.0,<0.9.0"
-  - SQLALCHEMY_VER=">=0.9.0,<1.0.0"
-  - SQLALCHEMY_VER=">=1.0.0,<1.1.0"
-  - SQLALCHEMY_VER=">=1.1.0,<1.2.0"
+  - SQLALCHEMY_VER=">=0.8.0,<0.9.0" PIP_OPTS=""
+  - SQLALCHEMY_VER=">=0.9.0,<1.0.0" PIP_OPTS=""
+  - SQLALCHEMY_VER=">=1.0.0,<1.1.0" PIP_OPTS=""
+  - SQLALCHEMY_VER=">=1.1.0b1,<1.2.0" PIP_OPTS="--pre"
 services:
 - postgresql
 - mysql
@@ -27,7 +27,11 @@ before_install:
 - echo "PY='$PY'"
 - echo "PY_VER='$PY_VER'"
 install:
-- pip install "SQLAlchemy $SQLALCHEMY_VER"
+- if [[ "$PIP_OPTS" != "" ]]; then
+    pip install $PIP_OPTS "SQLAlchemy $SQLALCHEMY_VER";
+  else
+    pip install "SQLAlchemy $SQLALCHEMY_VER";
+  fi
 - pip install -e .
 - pip install pytest flake8 import-order
 - if [[ "$PY_VER" != "3.2" ]]; then
