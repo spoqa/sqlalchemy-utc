@@ -1,6 +1,12 @@
 import datetime
 import os
 
+try:
+    from psycopg2ct.compat import register
+except ImportError:
+    pass
+else:
+    register()
 from pytest import fixture, mark, raises, yield_fixture
 from sqlalchemy.engine import create_engine
 from sqlalchemy.exc import StatementError
