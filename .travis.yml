@@ -1,0 +1,69 @@
+language: python
+python:
+- pypy
+- 2.6
+- 2.7
+- pypy3
+- 3.2
+- 3.3
+- 3.4
+- 3.5
+env:
+  global:
+  - PG_URL="postgresql:///utc_test"
+  - MYSQL_URL="mysql+mysqlconnector://root@localhost/utc_test"
+  - TEST_DATABASE_URLS="$PG_URL $MYSQL_URL"
+  matrix:
+  - SQLALCHEMY_VER=">=0.8.0,<0.9.0"
+  - SQLALCHEMY_VER=">=0.9.0,<1.0.0"
+  - SQLALCHEMY_VER=">=1.0.0,<1.1.0"
+  - SQLALCHEMY_VER=">=1.1.0,<1.2.0"
+services:
+- postgresql
+- mysql
+before_install:
+- export PY=`python -c 'import sys; print("pypy" if hasattr(sys,"pypy_version_info") else "%d.%d" % sys.version_info[:2])'`
+- export PY_VER=`python -c 'import sys; print("%d.%d" % sys.version_info[:2])'`
+- echo "PY='$PY'"
+- echo "PY_VER='$PY_VER'"
+install:
+- pip install "SQLAlchemy $SQLALCHEMY_VER"
+- pip install -e .
+- pip install pytest flake8 import-order
+- if [[ "$PY_VER" != "3.2" ]]; then
+    pip install pytest-cov codecov;
+  fi
+- if [[ "$PY" = "pypy" ]]; then
+    if [[ "$PY_VER" = "3.2" ]]; then
+      export TEST_DATABASE_URLS="";
+    else
+      pip install psycopg2ct;
+    fi
+  else
+    pip install psycopg2;
+  fi
+- if [[ "$PY" = "3.2" ]]; then
+    export TEST_DATABASE_URLS="$PG_URL";
+  elif [[ "$PY" = "pypy" ]]; then
+    if [[ "$PY_VER" != "3.2" ]]; then
+      pip install PyMySQL;
+      export TEST_DATABASE_URLS="${TEST_DATABASE_URLS/mysqlconnector/pymysql}";
+    fi
+  else
+    pip install --allow-all-external mysql-connector-python;
+  fi
+before_script:
+- createdb -E utf8 -T postgres utc_test
+- mysql -e 'CREATE DATABASE utc_test;'
+script:
+- if [[ "$PY_VER" = "3.2" ]]; then
+    py.test --durations=10 test.py;
+  else
+    py.test --cov sqlalchemy_utc.py --durations=10 test.py;
+  fi
+- flake8 .
+- import-order --only-file sqlalchemy_utc.py --only-file test.py
+after_success:
+- if [[ "$PY_VER" != "3.2" ]]; then
+    codecov;
+  fi
