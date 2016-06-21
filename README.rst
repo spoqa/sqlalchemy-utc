@@ -17,8 +17,8 @@ make any effect on these vendors.
 ``UtcDateTime`` type is equivalent to the built-in ``DateTime`` with
 ``timezone=True`` option enabled on vendors that support ``timestamptz``
 e.g. PostgreSQL, but on SQLite or MySQL, it shifts all ``datetime.datetime``
-values to UTC offset before store it, and returns always aware
-``datetime.datetime`` through result sets.
+values to UTC offset before store them, and returns always aware
+``datetime.datetime`` values through result sets.
 
 Long story short, ``UtcDateTime`` does:
 
