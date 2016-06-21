@@ -34,7 +34,7 @@ install:
     pip install "SQLAlchemy $SQLALCHEMY_VER";
   fi
 - pip install -e .
-- pip install pytest flake8 import-order
+- pip install pytest flake8 "import-order >= 0.0.10"
 - if [[ "$PY_VER" != "3.2" ]]; then
     pip install pytest-cov codecov;
   fi
@@ -67,7 +67,7 @@ script:
     py.test --cov sqlalchemy_utc.py --durations=10 test.py;
   fi
 - flake8 .
-- import-order --only-file sqlalchemy_utc.py --only-file test.py
+- pip uninstall -y SQLAlchemy-Utc && import-order --only-file sqlalchemy_utc.py test.py
 after_success:
 - if [[ "$PY_VER" != "3.2" ]]; then
     codecov;
