@@ -13,6 +13,7 @@ env:
   - PG_URL="postgresql:///utc_test"
   - MYSQL_URL="mysql+mysqlconnector://root@localhost/utc_test"
   - TEST_DATABASE_URLS="$PG_URL $MYSQL_URL"
+  - MYSQL_CONNECTOR_PYTHON_URL="http://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.0.4.zip"
   matrix:
   - SQLALCHEMY_VER=">=0.8.0,<0.9.0" PIP_OPTS=""
   - SQLALCHEMY_VER=">=0.9.0,<1.0.0" PIP_OPTS=""
@@ -54,7 +55,7 @@ install:
       export TEST_DATABASE_URLS="${TEST_DATABASE_URLS/mysqlconnector/pymysql}";
     fi
   else
-    pip install --allow-all-external mysql-connector-python;
+    pip install --find-links="$MYSQL_CONNECTOR_PYTHON_URL" --allow-all-external mysql-connector-python;
   fi
 before_script:
 - createdb -E utf8 -T postgres utc_test
