@@ -107,3 +107,10 @@ def test_utc_datetime_naive(fx_session):
         a = UtcDateTimeTable(time=datetime.datetime.now())
         fx_session.add(a)
         fx_session.flush()
+
+
+def test_utc_datetime_type(fx_session):
+    with raises((TypeError, StatementError)):
+        a = UtcDateTimeTable(time=str(datetime.datetime.now()))
+        fx_session.add(a)
+        fx_session.flush()
