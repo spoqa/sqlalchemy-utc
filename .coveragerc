@@ -1,6 +1,7 @@
 [run]
+source = sqlalchemy_utc/
 omit =
-    test.py
+    tests/*
     setup.py
 
 [report]

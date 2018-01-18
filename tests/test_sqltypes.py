@@ -1,5 +1,4 @@
 import datetime
-import os
 
 try:
     from psycopg2ct.compat import register
@@ -7,12 +6,11 @@ except ImportError:
     pass
 else:
     register()
-from pytest import fixture, mark, raises, yield_fixture
-from sqlalchemy.engine import create_engine
+from pytest import mark, raises, yield_fixture
+
 from sqlalchemy.exc import StatementError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import NullPool
 from sqlalchemy.schema import Column
 
 from sqlalchemy_utc import UtcDateTime, utc
@@ -20,20 +18,6 @@ from sqlalchemy_utc import UtcDateTime, utc
 
 Base = declarative_base()
 Session = sessionmaker()
-
-
-try:
-    database_urls = os.environ['TEST_DATABASE_URLS'].split()
-except KeyError:
-    database_urls = []
-
-
-@fixture(scope='function', params=['sqlite://'] + database_urls)
-def fx_engine(request):
-    url = request.param
-    engine = create_engine(url, poolclass=NullPool)
-    request.addfinalizer(engine.dispose)
-    return engine
 
 
 @yield_fixture

@@ -6,11 +6,13 @@ python:
 - 3.4
 - 3.5
 - 3.6
+
 env:
 - SQLALCHEMY_VER=">=0.9.0,<1.0.0" PIP_OPTS=""
 - SQLALCHEMY_VER=">=1.0.0,<1.1.0" PIP_OPTS=""
 - SQLALCHEMY_VER=">=1.1.0,<1.2.0" PIP_OPTS=""
 - SQLALCHEMY_VER=">=1.2.0,<1.3.0" PIP_OPTS=""
+
 matrix:
   exclude:
   # SQLAlchemy < 1.0.0 does not support psycopg2cffi as required by pypy
@@ -18,9 +20,11 @@ matrix:
     env: SQLALCHEMY_VER=">=0.9.0,<1.0.0" PIP_OPTS=""
   - python: pypy3
     env: SQLALCHEMY_VER=">=0.9.0,<1.0.0" PIP_OPTS=""
+
 services:
 - postgresql
 - mysql
+
 before_install:
 - export PY=`python -c 'import sys; print("pypy" if hasattr(sys,"pypy_version_info") else "%d.%d" % sys.version_info[:2])'`
 - export PY_VER=`python -c 'import sys; print("%d.%d" % sys.version_info[:2])'`
@@ -34,6 +38,7 @@ before_install:
     export MYSQL_URL="mysql+mysqlconnector://root@localhost/utc_test";
   fi
 - export TEST_DATABASE_URLS="$PG_URL $MYSQL_URL"
+
 install:
 - if [[ "$PIP_OPTS" != "" ]]; then
     pip install $PIP_OPTS "SQLAlchemy $SQLALCHEMY_VER";
@@ -41,19 +46,21 @@ install:
     pip install "SQLAlchemy $SQLALCHEMY_VER";
   fi
 - pip install -e .
-- pip install pytest flake8 "import-order >= 0.0.10"
+- pip install pytest flake8 flake8-import-order
 - pip install pytest-cov codecov
 - if [[ "$PY" = "pypy" ]]; then
     pip install psycopg2cffi pymysql;
   else
     pip install psycopg2 mysql-connector-python;
   fi
+
 before_script:
 - createdb -E utf8 -T postgres utc_test
 - mysql -e 'CREATE DATABASE utc_test;'
+
 script:
-- pytest --cov=. --durations=10 test.py
+- pytest --cov=. --durations=10 tests
 - flake8 .
-- pip uninstall -y SQLAlchemy-Utc && import-order --only-file sqlalchemy_utc.py test.py
+
 after_success:
 - codecov
