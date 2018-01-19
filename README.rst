@@ -28,6 +28,10 @@ Long story short, ``UtcDateTime`` does:
 - ensure timestamps in database always to be encoded in UTC, and
 - work as you'd expect.
 
+A SQLAlchemy helper function, ``utcnow()``, is provided as an alternative
+to ``func.now()`` for generating ``UtcDateTime`` values on the server. For
+example: ``Column('time', UtcDateTime(), default=utcnow())``.
+
 Written by `Hong Minhee`_ at Spoqa_, and distributed under MIT license.
 
 .. _DateTime: http://docs.sqlalchemy.org/en/latest/core/type_basics.html#sqlalchemy.types.DateTime
