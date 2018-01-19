@@ -34,7 +34,7 @@ def get_version():
             return node.value.s
 
 
-install_requires = ['setuptools', 'SQLAlchemy >= 0.8.0']
+install_requires = ['setuptools', 'SQLAlchemy >= 0.9.0']
 
 
 setup(
@@ -53,12 +53,10 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Programming Language :: Python :: Implementation :: Stackless',

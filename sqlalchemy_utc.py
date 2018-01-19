@@ -3,7 +3,7 @@ import datetime
 from sqlalchemy.types import DateTime, TypeDecorator
 
 __all__ = 'UtcDateTime', '__version__'
-__version__ = '0.9.0'
+__version__ = '0.10.0'
 
 
 class UtcDateTime(TypeDecorator):
