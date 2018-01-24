@@ -1,7 +1,7 @@
 import ast
 import os.path
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 
 def readme():
@@ -19,7 +19,10 @@ def readme():
 
 
 def get_version():
-    module_path = os.path.join(os.path.dirname(__file__), 'sqlalchemy_utc.py')
+    module_path = os.path.join(
+        os.path.dirname(__file__),
+        'sqlalchemy_utc',
+        'version.py')
     module_file = open(module_path)
     try:
         module_code = module_file.read()
@@ -43,10 +46,10 @@ setup(
     long_description=readme(),
     version=get_version(),
     url='https://github.com/spoqa/sqlalchemy-utc',
+    packages=find_packages(exclude=('tests*',)),
     author='Hong Minhee',
     author_email='hongminhee' '@' 'member.fsf.org',
     license='MIT License',
-    py_modules=['sqlalchemy_utc'],
     install_requires=install_requires,
     classifiers=[
         'Development Status :: 4 - Beta',

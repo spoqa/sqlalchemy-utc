@@ -2,8 +2,7 @@ import datetime
 
 from sqlalchemy.types import DateTime, TypeDecorator
 
-__all__ = 'UtcDateTime', '__version__'
-__version__ = '0.10.0'
+from .timezone import utc
 
 
 class UtcDateTime(TypeDecorator):
@@ -35,23 +34,3 @@ class UtcDateTime(TypeDecorator):
         if value is not None and value.tzinfo is None:
             value = value.replace(tzinfo=utc)
         return value
-
-
-class Utc(datetime.tzinfo):
-
-    zero = datetime.timedelta(0)
-
-    def utcoffset(self, _):
-        return self.zero
-
-    def dst(self, _):
-        return self.zero
-
-    def tzname(self, _):
-        return 'UTC'
-
-
-try:
-    utc = datetime.timezone.utc
-except AttributeError:
-    utc = Utc()
