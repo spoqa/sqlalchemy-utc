@@ -4,7 +4,7 @@ Changelog
 0.10.0
 ------
 
-To be released.
+Released on January 25, 2018.
 
 - Dropped support of older Python versions: 2.6, 3.2, and 3.3.
   [`#2`_ by George Leslie-Waksman]
