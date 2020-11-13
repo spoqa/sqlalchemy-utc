@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.11.0
+------
+
+Released on November 13, 2020.
+
+- Ensured always returning the datetime with UTC timezone.
+  [`#8_` by Eduard Christian Dumitrescu]
+
+.. _#8: https://github.com/spoqa/sqlalchemy-utc/pull/8
+
+
 0.10.0
 ------
 
