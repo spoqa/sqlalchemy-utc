@@ -47,6 +47,7 @@ setup(
     version=get_version(),
     url='https://github.com/spoqa/sqlalchemy-utc',
     packages=find_packages(exclude=('tests*',)),
+    package_data={'sqlalchemy_utc': ['py.typed']},
     author='Hong Minhee',
     author_email='hongminhee' '@' 'member.fsf.org',
     license='MIT License',
