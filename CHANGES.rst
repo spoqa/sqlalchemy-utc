@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.12.0
+------
+
+Released on May 7, 2021.
+
+- Add `py.typed` file to the package to be compatible with PEP-561.
+  [`#10`_ by Dima Boger]
+
+.. _#10: https://github.com/spoqa/sqlalchemy-utc/pull/10
+
+
 0.11.0
 ------
 
