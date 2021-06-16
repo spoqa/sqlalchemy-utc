@@ -34,7 +34,12 @@ def mysql_sql_utcnow(element, compiler, **kw):
 
 @compiles(utcnow, 'sqlite')
 def sqlite_sql_utcnow(element, compiler, **kw):
-    return "(DATETIME('NOW'))"
+    """SQLite DATETIME('NOW') returns a correct `datetime.datetime` but does not
+    add milliseconds to it.
+
+    Directly call STRFTIME with the final %f modifier in order to get those.
+    """
+    return r"(STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW'))"
 
 
 @compiles(utcnow, 'mssql')
