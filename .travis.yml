@@ -21,6 +21,14 @@ services:
 - postgresql
 - mysql
 
+jobs:
+  exclude:
+    # No package of SQLAlchemy v1.4 for these Python versions
+    - python: 3.4
+      env: SQLALCHEMY_VER=">=1.4.0,<1.5.0" PIP_OPTS=""
+    - python: 3.5
+      env: SQLALCHEMY_VER=">=1.4.0,<1.5.0" PIP_OPTS=""
+
 before_install:
 - export PY=`python -c 'import sys; print("pypy" if hasattr(sys,"pypy_version_info") else "%d.%d" % sys.version_info[:2])'`
 - export PY_VER=`python -c 'import sys; print("%d.%d" % sys.version_info[:2])'`
@@ -42,7 +50,14 @@ install:
     pip install "SQLAlchemy $SQLALCHEMY_VER";
   fi
 - pip install -e .
-- pip install pytest pytest-cov codecov flake8 flake8-import-order
+- pip install pytest codecov flake8 flake8-import-order
+# pytest-cov 2.10.0 requires a pytest >= 4.6 which is not available in the Python 2.7 environment.
+# Use an older version for it.
+- if [[ "$PY_VER" = "2.7" -a "$PY" != "pypy" ]]; then
+    pip install 'pytest-cov < 2.10.0';
+  else
+    pip install pytest-cov;
+  fi
 # PyMySQL dropped support for Python 2.7 in version 1.0.0:
 # https://github.com/PyMySQL/PyMySQL/blob/master/CHANGELOG.md#v100
 # mysql-coonector-python did the same since version 8.0.24:
