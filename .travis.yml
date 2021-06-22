@@ -53,7 +53,7 @@ install:
 - pip install pytest codecov flake8 flake8-import-order
 # pytest-cov 2.10.0 requires a pytest >= 4.6 which is not available in the Python 2.7 environment.
 # Use an older version for it.
-- if [[ "$PY_VER" = "2.7" -a "$PY" != "pypy" ]]; then
+- if [[ "$PY_VER" = "2.7" && "$PY" != "pypy" ]]; then
     pip install 'pytest-cov < 2.10.0';
   else
     pip install pytest-cov;
