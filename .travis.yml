@@ -11,20 +11,11 @@ python:
 - 3.9
 
 env:
-- SQLALCHEMY_VER=">=0.9.0,<1.0.0" PIP_OPTS=""
 - SQLALCHEMY_VER=">=1.0.0,<1.1.0" PIP_OPTS=""
 - SQLALCHEMY_VER=">=1.1.0,<1.2.0" PIP_OPTS=""
 - SQLALCHEMY_VER=">=1.2.0,<1.3.0" PIP_OPTS=""
 - SQLALCHEMY_VER=">=1.3.0,<1.4.0" PIP_OPTS=""
 - SQLALCHEMY_VER=">=1.4.0,<1.5.0" PIP_OPTS=""
-
-matrix:
-  exclude:
-  # SQLAlchemy < 1.0.0 does not support psycopg2cffi as required by pypy
-  - python: pypy
-    env: SQLALCHEMY_VER=">=0.9.0,<1.0.0" PIP_OPTS=""
-  - python: pypy3
-    env: SQLALCHEMY_VER=">=0.9.0,<1.0.0" PIP_OPTS=""
 
 services:
 - postgresql
@@ -51,10 +42,15 @@ install:
     pip install "SQLAlchemy $SQLALCHEMY_VER";
   fi
 - pip install -e .
-- pip install pytest flake8 flake8-import-order
-- pip install pytest-cov codecov
+- pip install pytest pytest-cov codecov flake8 flake8-import-order
+# PyMySQL dropped support for Python 2.7 in version 1.0.0:
+# https://github.com/PyMySQL/PyMySQL/blob/master/CHANGELOG.md#v100
+# mysql-coonector-python did the same since version 8.0.24:
+# https://dev.mysql.com/doc/connector-python/en/connector-python-versions.html
 - if [[ "$PY" = "pypy" ]]; then
-    pip install psycopg2cffi pymysql;
+    pip install psycopg2cffi 'pymysql < 1.0.0';
+  elif [[ "$PY_VER" = "2.7" ]]; then
+    pip install psycopg2 'mysql-connector-python < 8.0.24';
   else
     pip install psycopg2 mysql-connector-python;
   fi
