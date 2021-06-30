@@ -3,10 +3,10 @@ SQLAlchemy-Utc
 
 .. image:: https://badge.fury.io/py/SQLAlchemy-Utc.svg?
    :target: https://pypi.python.org/pypi/SQLAlchemy-Utc
-.. image:: https://travis-ci.com/ItachiSan/sqlalchemy-utc.svg?branch=master
-   :target: https://travis-ci.com/ItachiSan/sqlalchemy-utc
-.. image:: https://codecov.io/github/ItachiSan/sqlalchemy-utc/coverage.svg?branch=master
-   :target: https://codecov.io/github/ItachiSan/sqlalchemy-utc?branch=master
+.. image:: https://travis-ci.com/spoqa/sqlalchemy-utc.svg?branch=master
+   :target: https://travis-ci.com/spoqa/sqlalchemy-utc
+.. image:: https://codecov.io/github/spoqa/sqlalchemy-utc/coverage.svg?branch=master
+   :target: https://codecov.io/github/spoqa/sqlalchemy-utc?branch=master
 
 This package provides a drop-in replacement of SQLAlchemy's built-in `DateTime`_
 type with ``timezone=True`` option enabled.  Although SQLAlchemy's built-in
