@@ -20,6 +20,7 @@ class UtcDateTime(TypeDecorator):
     """
 
     impl = DateTime(timezone=True)
+    cache_ok = False
 
     def process_bind_param(self, value, dialect):
         if value is not None:
