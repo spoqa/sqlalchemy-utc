@@ -3,8 +3,8 @@ SQLAlchemy-Utc
 
 .. image:: https://badge.fury.io/py/SQLAlchemy-Utc.svg?
    :target: https://pypi.python.org/pypi/SQLAlchemy-Utc
-.. image:: https://travis-ci.org/spoqa/sqlalchemy-utc.svg?branch=master
-   :target: https://travis-ci.org/spoqa/sqlalchemy-utc
+.. image:: https://travis-ci.com/spoqa/sqlalchemy-utc.svg?branch=master
+   :target: https://travis-ci.com/spoqa/sqlalchemy-utc
 .. image:: https://codecov.io/github/spoqa/sqlalchemy-utc/coverage.svg?branch=master
    :target: https://codecov.io/github/spoqa/sqlalchemy-utc?branch=master
 
