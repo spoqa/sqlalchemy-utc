@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.14.0
+------
+
+Released on September 24, 2021.
+
+- Add cache_ok flag on ``UtcDateTime`` to supress Pandas warnings.
+  [`#14`_ by derekderie]
+
+.. _#14: https://github.com/spoqa/sqlalchemy-utc/pull/14
+
+
 0.13.0
 ------
 
