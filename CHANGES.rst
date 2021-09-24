@@ -1,6 +1,18 @@
 Changelog
 =========
 
+0.13.0
+------
+
+Released on September 24, 2021.
+
+- Add milliseconds to SQLite datetimes.  [`#12`_ by Giovanni Santini]
+- Add support for newer python versions. (3.7, 3.8, 3.9)
+  [`#12`_ by Giovanni Santini]
+
+.. _#12: https://github.com/spoqa/sqlalchemy-utc/pull/12
+
+
 0.12.0
 ------
 
