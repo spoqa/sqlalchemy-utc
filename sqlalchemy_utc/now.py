@@ -7,6 +7,7 @@ from .sqltypes import UtcDateTime
 
 class utcnow(FunctionElement):
     """UTCNOW() expression for multiple dialects."""
+
     inherit_cache = True
     type = UtcDateTime()
 
